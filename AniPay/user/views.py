@@ -2,7 +2,8 @@ from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from services.onboarding_service import create_user_and_wallet
-from .serializers import UserSerializer
+from .serializers import UserSerializer, LoginSerializer
+
 
 # Create your views here.
 
@@ -12,3 +13,12 @@ def create_wallet(request):
     serializer.is_valid(raise_exception=True)
     create_user_and_wallet(serializer.validated_data)
     return Response( {"message" : "Registration Successful"}, status=status.HTTP_201_CREATED)
+
+@api_view(['POST'])
+def login(request):
+    serializer = LoginSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+
+    return Response( serializer.validated_data,
+                     status=status.HTTP_200_OK)
+

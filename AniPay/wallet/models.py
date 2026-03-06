@@ -43,7 +43,7 @@ class Transaction(models.Model):
 
 class Ledger(models.Model):
     transaction = models.ForeignKey(Transaction, on_delete=models.PROTECT)
-    balance_after = models.DecimalField(max_digits=40, decimal_places=2)
+    balance_after = models.DecimalField(max_digits=10, decimal_places=2)
     wallet = models.ForeignKey(Wallet, on_delete=models.PROTECT)
     entry_type = models.CharField(max_length=6, choices=Transaction.TRANSACTION_TYPE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
