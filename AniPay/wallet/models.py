@@ -10,7 +10,7 @@ class Wallet(models.Model):
     ('USD' , 'Dollar'),
     ('EUR' , 'Euro')
     )
-    wallet_number = models.CharField(max_length=10, unique=True)
+    wallet_number = models.CharField(max_length=10, unique=True, primary_key=True)
     account_number = models.CharField(max_length=10, unique=True , default=get_account_number)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES , default='NGN')

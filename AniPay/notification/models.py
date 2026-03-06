@@ -10,7 +10,7 @@ class Notification(models.Model):
     )
 
     wallet = models.CharField(max_length = 10, null = True, blank = True)
-    reference = models.CharField(max_length=40, blank=True , unique=True)
+    reference = models.CharField(max_length=40, blank=True , unique=True, null=True)
     message = models.TextField()
     channel = models.CharField(max_length=10, choices=CHANNEL_TYPE, default='EMAIL')
     created_at = models.DateTimeField(auto_now_add=True)
