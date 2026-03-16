@@ -10,13 +10,22 @@ class Wallet(models.Model):
     ('USD' , 'Dollar'),
     ('EUR' , 'Euro')
     )
+
+    STATUS_CHOICES = (
+    ('ACTIVE', 'Active'),
+    ('INACTIVE', 'Inactive'),
+    ('SUSPENDED', 'Suspended')
+    )
     wallet_number = models.CharField(max_length=10, unique=True, primary_key=True)
     account_number = models.CharField(max_length=10, unique=True , default=get_account_number)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES , default='NGN')
-    status = models.BooleanField(default=True)
+    status = models.BooleanField(choices=STATUS_CHOICES , default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return f"{self.wallet_number}"
 
 
 class Transaction(models.Model):
@@ -40,6 +49,9 @@ class Transaction(models.Model):
     idempotency_key = models.UUIDField(unique=True, editable=False , blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     reference = models.CharField(max_length=40, default=generate_reference)
+
+    def __str__(self):
+        return f"{self.reference}"
 
 class Ledger(models.Model):
     transaction = models.ForeignKey(Transaction, on_delete=models.PROTECT)
