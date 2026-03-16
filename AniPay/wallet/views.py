@@ -6,7 +6,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from wallet.models import Wallet
-from wallet.serializers import WalletTransferSerializer
+from wallet.serializers import WalletTransferSerializer, DashBoardSerializer
+from wallet.services.dashboard_service import get_dashboard_data
 from wallet.services.wallet_transfer import wallet_to_wallet_transfer
 
 # Create your views here.
@@ -35,4 +36,13 @@ def transfer_to_wallet(request):
         },
         status=status.HTTP_201_CREATED
     )
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def dashboard(request):
+    user = request.user
+    dashboard_data = get_dashboard_data(user)
+    serializer = DashBoardSerializer(dashboard_data)
+    return Response(serializer.data, status=status.HTTP_200_OK)
+
 

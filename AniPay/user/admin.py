@@ -13,6 +13,11 @@ class UserAdmin(BaseUserAdmin):
             {
                 "classes": ("wide",),
                 "fields": ("username", "usable_password", "password1", "password2", "email", "first_name", "last_name"),
-            },
+            }
         ),
     )
+
+    def has_delete_permission(self, request, obj=None):
+        if obj and obj.is_superuser:
+            return False
+        return super().has_add_permission(request , obj)

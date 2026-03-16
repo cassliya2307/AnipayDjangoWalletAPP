@@ -22,7 +22,7 @@ class Wallet(models.Model):
     currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES , default='NGN')
     status = models.BooleanField(choices=STATUS_CHOICES , default=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, related_name='wallet')
 
     def __str__(self):
         return f"{self.wallet_number}"
