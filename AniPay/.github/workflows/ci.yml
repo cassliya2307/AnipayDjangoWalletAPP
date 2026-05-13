@@ -27,12 +27,18 @@ jobs:
         run: uv pip install --system -r pyproject.toml
 
       - name: Run Tests
+        env:
+          DB_USER: root
+          DB_PASSWORD: Haliya@2307
+          DB_NAME: anipay_db
+          DB_HOST: localhost
+          DB_PORT: 3306
+          SECRET_KEY: test_secret_key
         run: python manage.py test
 
   build-and-push:
     needs: test
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
