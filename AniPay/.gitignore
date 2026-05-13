@@ -9,3 +9,5 @@ bb
 # Virtual environments
 .venv
 .env
+
+build.sh
